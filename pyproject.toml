@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "ptvg"
 version = "0.1.0"
-description = ""
+description = "personal television guide based on schedules direct data."
 authors = ["ccdale <chris.allison@hivehome.com>"]
 
 [tool.poetry.dependencies]
