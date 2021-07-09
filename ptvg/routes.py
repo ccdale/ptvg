@@ -15,22 +15,10 @@
 #     You should have received a copy of the GNU General Public License
 #     along with ptvg.  If not, see <http://www.gnu.org/licenses/>.
 
-"""The Personal TV Guide Application."""
+"""ptvg routes module."""
 
-import logging
-import logging.handlers
+import sys
 
-from flask import Flask
+from ptvg import tvapp
 
-log = logging.getLogger(__name__)
-log.setLevel(logging.DEBUG)
-syslog = logging.handlers.SysLogHandler(address="/dev/log")
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-syslog.setFormatter(formatter)
-log.addHandler(syslog)
-
-__version__ = "0.1.6"
-
-tvapp = Flask(__name__)
-
-from ptvg import routes
+log = ptvg.log
