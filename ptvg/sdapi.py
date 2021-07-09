@@ -30,7 +30,6 @@ import time
 import requests
 
 import ptvg
-from ptvg import __version__
 
 log = ptvg.log
 
@@ -71,7 +70,7 @@ class SDApi:
             self.appname = appname
             self.url = url
             self.debug = debug
-            self.headers = {"User-Agent": f"{appname} / {__version__}"}
+            self.headers = {"User-Agent": f"{appname} / {ptvg.__version__}"}
             self.token = token
             self.tokenexpires = tokenexpires
             self.online = False

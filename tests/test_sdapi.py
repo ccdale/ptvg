@@ -19,28 +19,28 @@
 
 import pytest
 
-from ptvg.config import Configuration
-from ptvg.credential import Credential
-from ptvg.sdapi import SDApi
+import ptvg
 
 
 @pytest.fixture
 def setsdapi():
-    cfgo = Configuration(appname="ptvg")
+    cfgo = ptvg.config.Configuration(appname="ptvg")
     cfg = cfgo.config
     cfgun = cfg.get("username", "wibble")
+    cfgtok = cfg.get("token", None)
+    cfgtokexp = cfg.get("tokenexpires", 0)
     sdhostname = "schedulesdirect.org"
-    CREDS = Credential(cfgun, sdhostname)
+    CREDS = ptvg.credential.Credential(cfgun, sdhostname)
     hpw = CREDS.getPassword()
     # note, if you set debug to true
     # your hashed password and the current api token
     # will appear in the logs
-    sd = SDApi(cfgun, hpw, debug=False)
-    return sd
+    sd = ptvg.sdapi.SDApi(cfgun, hpw, debug=False, token=cfgtok, tokenexpires=cfgtokexp)
+    return (sd, cfgo)
 
 
 def test_config():
-    cfgo = Configuration(appname="ptvg")
+    cfgo = ptvg.config.Configuration(appname="ptvg")
     cfg = cfgo.config
     cfgun = cfg.get("username", "wibble")
     assert cfgun == "chrisallison"
@@ -69,10 +69,15 @@ def test_setup(setsdapi):
             "uri": "/20141201/transmitters/{ISO 3166-1 alpha-3}",
         },
     ]
-    avail = setsdapi.available()
+    sd, cfgo = setsdapi
+    avail = sd.available()
     assert avail == wanted
 
 
 def test_apiOnline(setsdapi):
-    setsdapi.apiOnline()
-    assert setsdapi.online is True
+    sd, cfgo = setsdapi
+    sd.apiOnline()
+    cfgo.update("token", sd.token)
+    cfgo.update("tokenexpires", sd.tokenexpires)
+    cfgo.writeConfig()
+    assert sd.online is True
