@@ -33,4 +33,4 @@ __version__ = "0.1.6"
 
 tvapp = Flask(__name__)
 
-from ptvg import routes
+from tvapp import routes
