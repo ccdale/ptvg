@@ -20,6 +20,9 @@
 import sys
 
 import ptvg
+from ptvg.config import Configuration
+from ptvg.credential import Credential
+from ptvg.sdapi import SDApi
 
 log = ptvg.log
 
@@ -27,7 +30,7 @@ log = ptvg.log
 def getCreds(username):
     try:
         sdhostname = "schedulesdirect.org"
-        CREDS = ptvg.credential.Credential(username, sdhostname)
+        CREDS = Credential(username, sdhostname)
         hpw = CREDS.getPassword()
         un = username
         if hpw is None:
@@ -36,7 +39,7 @@ def getCreds(username):
             pw = input("Schedules Direct password: ")
             if pw is not None:
                 hpw = hashlib.sha1(pw.encode()).hexdigest()
-                CREDS = ptvg.credential.Credential(un, sdhostname)
+                CREDS = Credential(un, sdhostname)
                 CREDS.setPassword(hpw)
             else:
                 raise Exception("No credentials supplied")
@@ -53,11 +56,11 @@ def getCreds(username):
 
 def telly(debug=False):
     try:
-        cfgo = ptvg.config.Configuration(appname="ptvg")
+        cfgo = Configuration(appname="ptvg")
         cfg = cfgo.config
         cfgun = cfg.get("username", "")
         un, pw = getCreds(cfgun)
-        sd = ptvg.sdapi.SDApi(
+        sd = SDApi(
             cfgun,
             pw,
             debug=debug,
@@ -76,4 +79,4 @@ def telly(debug=False):
 
 
 if __name__ == "__main__":
-    telly()
+    telly(debug=False)

@@ -19,28 +19,30 @@
 
 import pytest
 
-import ptvg
+from ptvg.config import Configuration
+from ptvg.credential import Credential
+from ptvg.sdapi import SDApi
 
 
 @pytest.fixture
 def setsdapi():
-    cfgo = ptvg.config.Configuration(appname="ptvg")
+    cfgo = Configuration(appname="ptvg")
     cfg = cfgo.config
     cfgun = cfg.get("username", "wibble")
     cfgtok = cfg.get("token", None)
     cfgtokexp = cfg.get("tokenexpires", 0)
     sdhostname = "schedulesdirect.org"
-    CREDS = ptvg.credential.Credential(cfgun, sdhostname)
+    CREDS = Credential(cfgun, sdhostname)
     hpw = CREDS.getPassword()
     # note, if you set debug to true
     # your hashed password and the current api token
     # will appear in the logs
-    sd = ptvg.sdapi.SDApi(cfgun, hpw, debug=False, token=cfgtok, tokenexpires=cfgtokexp)
+    sd = SDApi(cfgun, hpw, debug=False, token=cfgtok, tokenexpires=cfgtokexp)
     return (sd, cfgo)
 
 
 def test_config():
-    cfgo = ptvg.config.Configuration(appname="ptvg")
+    cfgo = Configuration(appname="ptvg")
     cfg = cfgo.config
     cfgun = cfg.get("username", "wibble")
     assert cfgun == "chrisallison"
