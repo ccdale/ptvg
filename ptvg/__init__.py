@@ -29,8 +29,6 @@ formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(messag
 syslog.setFormatter(formatter)
 log.addHandler(syslog)
 
-__version__ = "0.1.6"
+__version__ = "0.1.7"
 
 tvapp = Flask(__name__)
-
-from tvapp import routes
