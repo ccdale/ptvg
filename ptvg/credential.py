@@ -45,6 +45,19 @@ class Credential:
             print(msg)
             raise
 
+    def deletePassword(self):
+        try:
+            if self.host is not None and self.username is not None:
+                keyring.delete_password(self.host, self.username)
+        except Exception as e:
+            exci = sys.exc_info()[2]
+            lineno = exci.tb_lineno
+            fname = exci.tb_frame.f_code.co_name
+            ename = type(e).__name__
+            msg = f"{ename} Exception at line {lineno} in function {fname}: {e}"
+            log.error(msg)
+            raise
+
     def getPassword(self):
         try:
             return keyring.get_password(self.host, self.username)
