@@ -45,7 +45,7 @@ class SDApi:
         self,
         username="",
         password="",
-        appname="ccasdtv",
+        appname="ptvg",
         # url="https://w8xmzqba6c.execute-api.us-east-1.amazonaws.com/20191022",
         # url="https://json.schedulesdirect.org/20191022",
         url="https://json.schedulesdirect.org/20141201",

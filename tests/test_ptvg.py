@@ -17,16 +17,8 @@
 
 """tests for ptvg application"""
 
-from ptvg.config import Configuration
 from ptvg import __version__
 
 
 def test_version():
     assert __version__ == "0.1.4"
-
-
-def test_config():
-    cfgo = Configuration(appname="ptvg")
-    cfg = cfgo.config
-    cfgun = cfg.get("username", "wibble")
-    assert cfgun == "chrisallison"
