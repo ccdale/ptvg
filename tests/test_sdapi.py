@@ -32,7 +32,10 @@ def setsdapi():
     sdhostname = "schedulesdirect.org"
     CREDS = Credential(cfgun, sdhostname)
     hpw = CREDS.getPassword()
-    sd = SDApi(cfgun, hpw, debug=True)
+    # note, if you set debug to true
+    # your hashed password and the current api token
+    # will appear in the logs
+    sd = SDApi(cfgun, hpw, debug=False)
     return sd
 
 
@@ -66,12 +69,10 @@ def test_setup(setsdapi):
             "uri": "/20141201/transmitters/{ISO 3166-1 alpha-3}",
         },
     ]
-    # cfgo = Configuration(appname="ptvg")
-    # cfg = cfgo.config
-    # cfgun = cfg.get("username", "wibble")
-    # sdhostname = "schedulesdirect.org"
-    # CREDS = Credential(cfgun, sdhostname)
-    # hpw = CREDS.getPassword()
-    # sd = SDApi(cfgun, hpw, debug=True)
     avail = setsdapi.available()
     assert avail == wanted
+
+
+def test_apiOnline(setsdapi):
+    setsdapi.apiOnline()
+    assert setsdapi.online is True
