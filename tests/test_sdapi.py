@@ -19,9 +19,12 @@
 
 import pytest
 
+import ptvg
 from ptvg.config import Configuration
 from ptvg.credential import Credential
 from ptvg.sdapi import SDApi
+
+ptvg.log.setLevel(ptvg.logging.DEBUG)
 
 
 @pytest.fixture

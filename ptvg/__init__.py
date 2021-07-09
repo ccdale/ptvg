@@ -23,7 +23,7 @@ import logging.handlers
 from flask import Flask
 
 log = logging.getLogger(__name__)
-log.setLevel(logging.DEBUG)
+log.setLevel(logging.INFO)
 syslog = logging.handlers.SysLogHandler(address="/dev/log")
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 syslog.setFormatter(formatter)
