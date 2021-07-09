@@ -15,18 +15,34 @@
 #     You should have received a copy of the GNU General Public License
 #     along with ptvg.  If not, see <http://www.gnu.org/licenses/>.
 
-"""tests for ptvg application"""
+"""tests for ptvg application credential object"""
 
-from ptvg.config import Configuration
-from ptvg import __version__
-
-
-def test_version():
-    assert __version__ == "0.1.2"
+from ptvg.credential import Credential
 
 
-def test_config():
-    cfgo = Configuration(appname="ptvg")
-    cfg = cfgo.config
-    cfgun = cfg.get("username", "wibble")
-    assert cfgun == "chrisallison"
+def test_creds_not_exist():
+    un = "wibble"
+    host = "fictitious.host"
+    CREDS = Credential(un, host)
+    hpw = CREDS.getPassword()
+    assert hpw is None
+
+
+def test_creds_create():
+    un = "wibble"
+    host = "fictitious.host"
+    CREDS = Credential(un, host)
+    CREDS.setPassword(password="hotticket")
+    hpw = CREDS.getPassword()
+    assert hpw == "hotticket"
+    CREDS.deletePassword()
+
+
+def test_creds_delete():
+    un = "wibble"
+    host = "fictitious.host"
+    CREDS = Credential(un, host)
+    CREDS.setPassword(password="something else")
+    CREDS.deletePassword()
+    hpw = CREDS.getPassword()
+    assert hpw is None
