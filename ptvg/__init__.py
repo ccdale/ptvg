@@ -8,4 +8,4 @@ formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(messag
 syslog.setFormatter(formatter)
 log.addHandler(syslog)
 
-__version__ = "0.1.3"
+__version__ = "0.1.4"
