@@ -32,3 +32,5 @@ log.addHandler(syslog)
 __version__ = "0.1.8"
 
 tvapp = Flask(__name__)
+
+from ptvg import routes
