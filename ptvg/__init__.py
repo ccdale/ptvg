@@ -30,7 +30,7 @@ formatter = logging.Formatter("%(name)s - %(levelname)s - %(message)s")
 syslog.setFormatter(formatter)
 log.addHandler(syslog)
 
-__version__ = "0.1.11"
+__version__ = "0.1.12"
 
 tvapp = Flask(__name__)
 tvappname = "ptvg"
