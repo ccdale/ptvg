@@ -17,6 +17,7 @@
 
 """The Personal TV Guide Application."""
 
+import datetime
 import logging
 import logging.handlers
 
@@ -32,5 +33,35 @@ log.addHandler(syslog)
 __version__ = "0.1.10"
 
 tvapp = Flask(__name__)
+tvappname = "ptvg"
 
 from ptvg import routes
+
+
+def getTimeStamp(dt, dtformat="%Y-%m-%dT%H:%M:%SZ"):
+    """Returns the integer epoch timestamp for the date time described by dt."""
+    try:
+        return int(datetime.datetime.strptime(dt, dtformat).timestamp())
+    except Exception as e:
+        exci = sys.exc_info()[2]
+        lineno = exci.tb_lineno
+        fname = exci.tb_frame.f_code.co_name
+        ename = type(e).__name__
+        msg = f"{ename} Exception at line {lineno} in function {fname}: {e}"
+        log.error(msg)
+        raise
+
+
+def showJson(jresp):
+    """Pretty print json responses."""
+    try:
+        print(json.dumps(jresp, indent=4, sort_keys=True), end="\n\n", flush=True)
+    except Exception as e:
+        exci = sys.exc_info()[2]
+        lineno = exci.tb_lineno
+        fname = exci.tb_frame.f_code.co_name
+        ename = type(e).__name__
+        msg = f"{ename} Exception at line {lineno} in function {fname}: {e}"
+        # print(msg)
+        log.error(msg)
+        raise
