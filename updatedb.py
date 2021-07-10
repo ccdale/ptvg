@@ -56,3 +56,7 @@ def update():
         msg = f"{ename} Exception at line {lineno} in function {fname}: {e}"
         log.error(msg)
         sys.exit(1)
+
+
+if __name__ == "__main__":
+    update()
