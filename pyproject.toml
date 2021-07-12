@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ptvg"
-version = "0.1.12"
+version = "0.1.13"
 description = "personal television guide based on schedules direct data."
 authors = ["ccdale <chris.allison@hivehome.com>"]
 
@@ -10,6 +10,9 @@ requests = "^2.25.1"
 keyring = "^23.0.1"
 PyYAML = "^5.4.1"
 Flask = "^2.0.1"
+SQLAlchemy = "^1.4.20"
+Flask-SQLAlchemy = "^2.5.1"
+Flask-Migrate = "^3.0.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
