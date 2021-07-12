@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Copyright (c) 2021, Christopher Allison
 #
 #     This file is part of ptvg.
@@ -15,24 +16,26 @@
 #     You should have received a copy of the GNU General Public License
 #     along with ptvg.  If not, see <http://www.gnu.org/licenses/>.
 
-"""ptvg routes module."""
+"""ptvg - setup for web pages."""
+
 
 import sys
 
-from flask import render_template
-
 import ptvg
-from ptvg import tvapp
-from ptvg.web import channelList
+from ptvg.config import Configuration
+from ptvg.db import SDDb
 
+
+ptvg.log.setLevel(ptvg.logging.INFO)
 log = ptvg.log
 
 
-@tvapp.route("/")
-def index():
+def wbegin():
     try:
-        chans = channelList()
-        return render_template("index.html", title="Home", chans=chans)
+        cfgo = Configuration(appname="ptvg")
+        cfg = cfgo.config
+        sdb = SDDb(appname=ptvg.tvappname)
+        return (cfg, sdb)
     except Exception as e:
         exci = sys.exc_info()[2]
         lineno = exci.tb_lineno
@@ -43,15 +46,10 @@ def index():
         raise
 
 
-@tvapp.route("/channel/<channelid>")
-def channel(channelid):
+def channelList():
     try:
-        chans = channelList()
-        for chan in chans:
-            if chan["stationid"] == channelid:
-                channame = chan["name"]
-                break
-        return render_template("index.html", title=channame, chans=chans)
+        cfg, sdb = wbegin()
+        return cfg["channels"]
     except Exception as e:
         exci = sys.exc_info()[2]
         lineno = exci.tb_lineno

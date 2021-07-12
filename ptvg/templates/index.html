@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% for chan in chans %}
+<p><a href="channel/{{chan['stationid']}}">{{chan['name']}}</a></p>
+{% endfor %}
+
+{% endblock %}

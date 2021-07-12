@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      {% if title %}
+      <title>{{title}} - PTVG</title>
+      {% else %}
+      <title>PTVG</title>
+      {% endif %}
+  </head>
+  <body>
+      <div class="pagehead">
+          PTVG: <a href="/">Home</a>
+      </div>
+      <div class="pagecontent">
+          {% block content %}{% endblock %}
+      </div>
+  </body>
+</html>
